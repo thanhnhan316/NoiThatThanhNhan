@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thanhnhan_project/src/configs/constanst/app_colors.dart';
 import 'package:thanhnhan_project/src/models/product.dart';
+import 'package:thanhnhan_project/src/presentation/addproduct/addproduct.dart';
 import 'package:thanhnhan_project/src/presentation/detail/detailscreen.dart';
 import 'package:thanhnhan_project/src/presentation/login/loginscreen.dart';
 import 'package:thanhnhan_project/src/services/fetchdata.dart';
@@ -23,7 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: buildWidget(),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => AddProductScreen()));
+          },
           child: Icon(Icons.add, size: 35),
           backgroundColor: BACKGROUND),
     );
@@ -57,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.all(8),
       child: Column(
         children: [
+          SizedBox(height: size.height * 0.03),
           Row(
             children: [
               SizedBox(width: 20),
@@ -69,8 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: size.width * 0.3, fit: BoxFit.fitWidth)),
               Expanded(child: Container()),
               IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.more_horiz, size: 40, color: Colors.white))
+                  onPressed: () {
+                    show();
+                  },
+                  icon: Icon(Icons.logout, size: 27, color: Colors.white))
             ],
           ),
           SizedBox(height: size.height * 0.015),
@@ -193,6 +200,26 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 25)
           ],
         ),
+      ),
+    );
+  }
+
+  show() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        content: Text("Đăng xuất"),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Hủy'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => LoginScreen())),
+            child: const Text('Đồng ý'),
+          ),
+        ],
       ),
     );
   }
